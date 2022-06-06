@@ -1,3 +1,4 @@
+import 'package:examgetapi/exampostapi.dart';
 import 'package:examgetapi/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -34,6 +35,16 @@ class _viewdetailpgState extends State<viewdetailpg> {
     double the_bodyheight = theheight - theststuabar - theappbar - thenavigator;
     return loadddingstatus
         ? Scaffold(
+            floatingActionButton: FloatingActionButton.extended(
+              label: Text("Next"),
+              onPressed: () {
+                Navigator.pushReplacement(context, MaterialPageRoute(
+                  builder: (context) {
+                    return postapipage();
+                  },
+                ));
+              },
+            ),
             appBar: AppBar(
               title: Text("${widget.detailproduct!.title}"),
               centerTitle: true,
