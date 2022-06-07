@@ -7,6 +7,7 @@ import 'package:examgetapi/viewdetailscreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -15,7 +16,7 @@ void main() {
 }
 
 class homepage extends StatefulWidget {
-  const homepage({Key? key}) : super(key: key);
+  static SharedPreferences? preferences;
 
   @override
   _homepageState createState() => _homepageState();
@@ -25,13 +26,29 @@ class _homepageState extends State<homepage> {
   var viewdata;
   myproductdataview? viewhere;
   bool screenloadstatus = false;
+  String? username;
+  String? userph;
+  String? usermail;
+  String? userimmg;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
 
+    getacdata();
     getproductdata();
+  }
+
+  getacdata() async {
+    homepage.preferences = await SharedPreferences.getInstance();
+
+    setState(() {
+      username = homepage.preferences!.getString("name") ?? "";
+      usermail = homepage.preferences!.getString("mailid") ?? "";
+      userph = homepage.preferences!.getString("mobileno") ?? "";
+      userimmg = homepage.preferences!.getString("imgaees") ?? "";
+    });
   }
 
   getproductdata() async {
@@ -58,6 +75,14 @@ class _homepageState extends State<homepage> {
             drawer: Drawer(
               child: ListView(
                 children: [
+                  UserAccountsDrawerHeader(
+                      currentAccountPicture: CircleAvatar(
+                        backgroundImage: NetworkImage(
+                            "http://ukin.unitechitsolution.in/ukinbackup/AndroidClass/$userimmg"),
+                        radius: 50,
+                      ),
+                      accountName: Text("${username}"),
+                      accountEmail: Text("${usermail}")),
                   ListTile(
                     onTap: () {
                       Navigator.pushReplacement(context, MaterialPageRoute(

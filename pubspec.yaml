@@ -38,6 +38,7 @@ dependencies:
   flutter_spinkit:
   lottie:
   image_picker:
+  shared_preferences:
 
 dev_dependencies:
   flutter_test:
