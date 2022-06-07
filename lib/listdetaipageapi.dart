@@ -1,4 +1,6 @@
 import 'package:examgetapi/hugeapilistpage.dart';
+import 'package:examgetapi/productcustompricepg.dart';
+import 'package:examgetapi/productmultiplecolourpage.dart';
 import 'package:examgetapi/productmultipleimgpage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -361,10 +363,9 @@ class _listofapidetailpageState extends State<listofapidetailpage> {
                             Navigator.pushReplacement(context,
                                 MaterialPageRoute(
                               builder: (context) {
-                                return productmultiimgpg(
-                                    widget.productList![widget.index]
-                                        .productMultipleImage,
-                                    widget.index);
+                                return productmultiimgpg(widget
+                                    .productList![widget.index]
+                                    .productMultipleImage);
                               },
                             ));
                           },
@@ -386,6 +387,130 @@ class _listofapidetailpageState extends State<listofapidetailpage> {
                             ],
                           ),
                         ),
+                        InkWell(
+                          onTap: () {
+                            Navigator.pushReplacement(context,
+                                MaterialPageRoute(
+                              builder: (context) {
+                                return productmulticlrpg(widget
+                                    .productList![widget.index]
+                                    .productMultipleColor);
+                              },
+                            ));
+                          },
+                          child: Row(
+                            children: [
+                              Text(
+                                "Product Multiple Colour : ",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: the_bodyheight * 0.02),
+                              ),
+                              Text(
+                                "Tap to See ",
+                                style: TextStyle(
+                                    fontSize: the_bodyheight * 0.02,
+                                    color: Colors.red,
+                                    fontWeight: FontWeight.bold),
+                              )
+                            ],
+                          ),
+                        ),
+                        Row(
+                          children: [
+                            Text(
+                              "Main Colour : ",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: the_bodyheight * 0.02),
+                            ),
+                            Text(
+                              "${widget.productList![widget.index].mainColor}",
+                              style: TextStyle(
+                                  fontSize: the_bodyheight * 0.02,
+                                  // color: Colors.red,
+                                  fontWeight: FontWeight.bold),
+                            )
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            Text(
+                              "Main Selling Price : ",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: the_bodyheight * 0.02),
+                            ),
+                            Text(
+                              "${widget.productList![widget.index].mainSellingPrice}",
+                              style: TextStyle(
+                                  fontSize: the_bodyheight * 0.02,
+                                  // color: Colors.red,
+                                  fontWeight: FontWeight.bold),
+                            )
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            Text(
+                              "Main MRP : ",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: the_bodyheight * 0.02),
+                            ),
+                            Text(
+                              "${widget.productList![widget.index].mainMrp} /- Rs",
+                              style: TextStyle(
+                                  fontSize: the_bodyheight * 0.02,
+                                  color: Colors.red,
+                                  fontWeight: FontWeight.bold),
+                            )
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            Text(
+                              "Main Discount : ",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: the_bodyheight * 0.02),
+                            ),
+                            Text(
+                              "${widget.productList![widget.index].mainDiscount}",
+                              style: TextStyle(
+                                  fontSize: the_bodyheight * 0.02,
+                                  // color: Colors.red,
+                                  fontWeight: FontWeight.bold),
+                            )
+                          ],
+                        ),
+                        InkWell(
+                          onTap: () {
+                            Navigator.pushReplacement(context,
+                                MaterialPageRoute(
+                              builder: (context) {
+                                return custompricepage(widget.productList![widget.index].productCustomPrice);
+                              },
+                            ));
+                          },
+                          child: Row(
+                            children: [
+                              Text(
+                                "Product Custom Price : ",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: the_bodyheight * 0.02),
+                              ),
+                              Text(
+                                "Tap to See ",
+                                style: TextStyle(
+                                    fontSize: the_bodyheight * 0.02,
+                                    color: Colors.red,
+                                    fontWeight: FontWeight.bold),
+                              )
+                            ],
+                          ),
+                        )
                       ],
                     ),
                   ),

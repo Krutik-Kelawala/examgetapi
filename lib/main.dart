@@ -1,9 +1,9 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
+import 'package:examgetapi/Registationpage.dart';
 import 'package:examgetapi/lottiescreen.dart';
 import 'package:examgetapi/viewdetailscreen.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -55,6 +55,22 @@ class _homepageState extends State<homepage> {
     double the_bodyheight = theheight - theststuabar - theappbar - thenavigator;
     return screenloadstatus
         ? Scaffold(
+            drawer: Drawer(
+              child: ListView(
+                children: [
+                  ListTile(
+                    onTap: () {
+                      Navigator.pushReplacement(context, MaterialPageRoute(
+                        builder: (context) {
+                          return regpg();
+                        },
+                      ));
+                    },
+                    title: Text("Registation"),
+                  )
+                ],
+              ),
+            ),
             appBar: AppBar(
               title: Text("Products"),
               centerTitle: true,
