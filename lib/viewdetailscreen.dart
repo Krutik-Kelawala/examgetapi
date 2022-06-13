@@ -2,6 +2,8 @@ import 'package:examgetapi/exampostapi.dart';
 import 'package:examgetapi/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:razorpay_flutter/razorpay_flutter.dart';
 
 class viewdetailpg extends StatefulWidget {
   Products? detailproduct;
@@ -15,14 +17,27 @@ class viewdetailpg extends StatefulWidget {
 class _viewdetailpgState extends State<viewdetailpg> {
   bool loadddingstatus = false;
   PageController controller = PageController();
+  late Razorpay _razorpay;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+
     setState(() {
       loadddingstatus = true;
     });
+
+    _razorpay = Razorpay();
+    _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
+    _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
+    _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _razorpay.clear();
   }
 
   @override
@@ -294,7 +309,15 @@ class _viewdetailpgState extends State<viewdetailpg> {
                               "${widget.detailproduct!.category}",
                               style: TextStyle(fontSize: the_bodyheight * 0.02),
                             ),
-                          )
+                          ),
+                          SizedBox(
+                            height: the_bodyheight * 0.09,
+                          ),
+                          ElevatedButton(
+                              onPressed: () {
+                                openCheckout();
+                              },
+                              child: Text("Pay now"))
                         ],
                       ),
                     ],
@@ -317,5 +340,46 @@ class _viewdetailpgState extends State<viewdetailpg> {
       },
     ));
     return Future.value(true);
+  }
+
+  void openCheckout() async {
+    var options = {
+      'key': 'rzp_test_msWrDdI2wpXI8F',
+      'amount': int.parse("${widget.detailproduct!.price}") * 100,
+      'name': '${widget.detailproduct!.title}',
+      'retry': {'enabled': true, 'max_count': 1},
+      'send_sms_hash': true,
+      'prefill': {'contact': '9638968680', 'email': 'test@razorpay.com'},
+      'external': {
+        'wallets': ['paytm']
+      }
+    };
+
+    try {
+      _razorpay.open(options);
+    } catch (e) {
+      debugPrint('Error: e');
+    }
+  }
+
+  void _handlePaymentSuccess(PaymentSuccessResponse response) {
+    print('Success Response: $response');
+    Fluttertoast.showToast(
+        msg: "SUCCESS: " + response.paymentId!,
+        toastLength: Toast.LENGTH_SHORT);
+  }
+
+  void _handlePaymentError(PaymentFailureResponse response) {
+    print('Error Response: $response');
+    Fluttertoast.showToast(
+        msg: "ERROR: " + response.code.toString() + " - " + response.message!,
+        toastLength: Toast.LENGTH_SHORT);
+  }
+
+  void _handleExternalWallet(ExternalWalletResponse response) {
+    print('External SDK Response: $response');
+    Fluttertoast.showToast(
+        msg: "EXTERNAL_WALLET: " + response.walletName!,
+        toastLength: Toast.LENGTH_SHORT);
   }
 }

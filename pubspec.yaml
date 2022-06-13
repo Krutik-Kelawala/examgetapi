@@ -39,6 +39,8 @@ dependencies:
   lottie:
   image_picker:
   shared_preferences:
+  razorpay_flutter:
+  fluttertoast:
 
 dev_dependencies:
   flutter_test:
