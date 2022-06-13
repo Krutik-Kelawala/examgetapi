@@ -34,11 +34,6 @@ class _viewdetailpgState extends State<viewdetailpg> {
     _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
   }
 
-  @override
-  void dispose() {
-    super.dispose();
-    _razorpay.clear();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -341,6 +336,13 @@ class _viewdetailpgState extends State<viewdetailpg> {
     ));
     return Future.value(true);
   }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _razorpay.clear();
+  }
+
 
   void openCheckout() async {
     var options = {
