@@ -34,7 +34,6 @@ class _viewdetailpgState extends State<viewdetailpg> {
     _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
   }
 
-
   @override
   Widget build(BuildContext context) {
     double theheight = MediaQuery.of(context).size.height;
@@ -305,16 +304,16 @@ class _viewdetailpgState extends State<viewdetailpg> {
                               style: TextStyle(fontSize: the_bodyheight * 0.02),
                             ),
                           ),
-                          SizedBox(
-                            height: the_bodyheight * 0.09,
-                          ),
-                          ElevatedButton(
-                              onPressed: () {
-                                openCheckout();
-                              },
-                              child: Text("Pay now"))
                         ],
                       ),
+                      SizedBox(
+                        height: the_bodyheight * 0.09,
+                      ),
+                      ElevatedButton(
+                          onPressed: () {
+                            openCheckout();
+                          },
+                          child: Text("Pay now"))
                     ],
                   ),
                 ),
@@ -342,7 +341,6 @@ class _viewdetailpgState extends State<viewdetailpg> {
     super.dispose();
     _razorpay.clear();
   }
-
 
   void openCheckout() async {
     var options = {
